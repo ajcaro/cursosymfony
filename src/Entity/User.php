@@ -42,11 +42,25 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Interaction::class, orphanRemoval: true)]
     private Collection $interactions;
 
-    public function __construct()
+    /**
+     * @param string|null $email
+     * @param array $roles
+     * @param string|null $password
+     * @param string|null $photo
+     * @param string|null $description
+     */
+    public function __construct(?string $email = null, ?string $password = null, ?string $photo = null, ?string $description = null)
     {
+        $this->email = $email;
+        $this->password = $password;
+        $this->photo = $photo;
+        $this->description = $description;
+
+
         $this->posts = new ArrayCollection();
         $this->interactions = new ArrayCollection();
     }
+
 
     public function getId(): ?int
     {
